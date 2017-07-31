@@ -1,0 +1,103 @@
+ ____________
+|            |
+|   Stack    |
+|  *******   |
+|------------| <---Top
+|  whatever  |
+|  (0x574)   |
+|------------|
+|            |
+| 0xC006FA0  |
+|            |
+|------------|
+|            |
+|  0x8 bytes |
+|            |
+|------------|
+|            |
+|   to be    | This is going to point to lastReturn minus 0x37E4
+| determined | startPos + 0x28 - 0x37E4 
+|            |
+|------------|
+|            |
+| 0x10 bytes |
+|            |
+|------------|
+|            |
+|stack pivot | Location of stack pivot (should be handled by MSC?)
+|  position  |
+|            |
+|------------|
+|            |
+| 0xC2EAB14  |
+|            |
+|------------|
+|            |
+| lastReturn | Location to jump to before stack pivot takes effect
+|            |
+ ------------ 
+
+Calculating stack pivot position:
+------------------
+* Overflow stack
+* Write 0x92 as index
+* Store that in globalVarX
+* Pop till back in stack
+* globalVarX += 0x240
+* Overflow stack
+* Write -0x8B (FFFFFF75) as index
+* Store in globalVarY
+* Push globalVarY
+* Push all other globalVars in order (to not overwrite the ones we need for later!)
+* Push 0s till we get back to the stack
+* stack pivot position = globalVarY + 0x30 + script_X (where script_X is the rest of the ROP chain)
+
+stack+0x574 = first return address for the ROP chain
+
+loc 2006FA0 = loading something into r12
+will get stack+0x24 as return address
+r12 = r1 + 0xC
+stackPos += 0x20
+.text:02006FA0                 lwz       r12, 0xC(r1)
+.text:02006FA4                 addi      r3, r1, 8
+.text:02006FA8                 stw       r11, 4(r31)
+.text:02006FAC                 li        r4, 2
+.text:02006FB0                 stw       r12, 8(r31)
+.text:02006FB4                 bl        sub_32FF61C
+.text:02006FB8                 lwz       r0, 0x20+arg_4(r1)
+.text:02006FBC                 mtlr      r0
+.text:02006FC0                 lwz       r31, 0x1C(r1)
+.text:02006FC4                 addi      r1, r1, 0x20
+.text:02006FC8                 blr
+
+loc 22EAB24 = stack pivot gadget (or 22EAB1C to get r0 -> mtlr)
+37E4 + r12 = returnPosition (aim this at the stack and fire at will)
+.text:022EAB14                 lwz       r0, 0x37E4(r12)
+.text:022EAB18                 lwz       r31, 0x37DC(r12)
+.text:022EAB1C                 mtlr      r0
+.text:022EAB20                 lwz       r30, 0x37D8(r12)
+.text:022EAB24                 lwz       r1, 0(r1)
+.text:022EAB28                 blr
+
+loc 0x200C650 q = load value from stack into r3
+r3 = stack+0x8
+return address = stack+0x74
+.text:0200C650                 lwz       r3, 0x70+var_68(r1)
+.text:0200C654                 lmw       r27, 0x70+var_14(r1)
+.text:0200C658                 lwz       r0, 0x70+arg_4(r1)
+.text:0200C65C                 mtlr      r0
+.text:0200C660                 addi      r1, r1, 0x70
+.text:0200C664                 blr
+
+r1 = 1124D3D0 at start
+
+
+with diibugger
+---------------
+writePos = 0x1124D3D0 + 0x570 + 0x2C = 0x1124D96C
+lastPos = writePos + 0x30 - 0x37E4 = 0x1124A1B8
+
+without diibugger
+-----------------
+writePos = 0x11258208 + 0x570 + 0x2C = 0x113587A4
+lastPos = writePos + 0x30 - 0x37E4 = 
