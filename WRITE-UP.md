@@ -104,7 +104,7 @@ setVar globalVar,calculatedStackPosition
 ```
 
 This is essentially
-```clang
+```C
 mscStackAddress = (leakedAddress - 0x2B4);
 calculatedStackPosition = (writePosition - mscStackAddress) / 4;
 ```
