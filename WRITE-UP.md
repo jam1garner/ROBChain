@@ -13,7 +13,7 @@
 
 ### Introduction
 
-ROB Chain is written in MSC assembly. If haven't heard of it, don't worry because it's the language used solely for the character moveset logic of Super Smash Brothers 4 and even then it (to my knowledge) has (since the release) been deprecated on 3ds. There isn't much that you really need to know about to understand about MSC asm to understand this exploit.
+ROB Chain is written in MSC assembly. If you haven't heard of it, don't worry because it's the language used solely for the character moveset logic of Super Smash Brothers 4 and even then it (to my knowledge) has (since the release) been deprecated on 3ds. There isn't much that you really need to know about to understand about MSC asm to understand this exploit.
 
 ###### Language design
 
@@ -27,7 +27,7 @@ add.         # Pushes 3 + localVar1 onto the stack
 
 ###### The bug
 
-Here is the memory layout of the how the MSC info is stored in memory.
+Here is the memory layout of how the MSC info is stored in memory.
 
 | Type | Data stored |
 | ---- | ----------- |
@@ -61,7 +61,7 @@ pushShort. 0x3
 pushShort. 0x7f
 pushShort. 0x80
 ```
-I push 128 values onto the stack, which completely fills it, leaving out index pointing *at* the index, meaning out next value pushed onto the stack will overwrite the stack index. The push code essentially goes:
+I push 128 values onto the stack, which completely fills it, leaving out index pointing *at* the index, meaning our next value pushed onto the stack will overwrite the stack index. The push code essentially goes:
 
 - get index at stackPosition+0x200
 - write the value at stackPosition + (index << 2)
