@@ -9,4 +9,4 @@ https://youtu.be/u3qKsbGPgn0
 
 ### Write up
 
-Coming soon
+https://github.com/jam1garner/ROBChain/blob/master/WRITE-UP.md
