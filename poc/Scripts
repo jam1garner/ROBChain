@@ -1,3 +1,3 @@
-:script_0.txt
-string.txt
-|mario.mscsb
+:main.s
+payload.s
+|exploit.mscsb
