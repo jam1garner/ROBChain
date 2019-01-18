@@ -1,0 +1,3 @@
+[submodule "pymsc"]
+	path = pymsc
+	url = https://github.com/jam1garner/pymsc
