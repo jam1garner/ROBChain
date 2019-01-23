@@ -9,6 +9,8 @@ Required:
 
 * Python 3.6 or greater in path as python3 (Edit Makefile for other configs)
 * make
+* php
+* A copy of the [wiiuhaxx_common release files (>=0.3](https://github.com/wiiu-env/wiiuhaxx_common/releases) inside a folder `wiiuhaxx_common.`
 
 ```
 git clone --recurse-submodules https://github.com/jam1garner/ROBChain.git && \
