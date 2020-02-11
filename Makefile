@@ -1,12 +1,13 @@
-python=python3
-POC_PATH=poc/exploit.mscsb
+python       := python3
+EXPLOIT_DIR  := homebrew
+EXPLOIT_PATH := $(EXPLOIT_DIR)/exploit.mscsb
 
-poc: $(POC_PATH)
+homebrew: $(EXPLOIT_PATH)
 	$(python) inject.py $<
 
 clean:
 	rm -r data
-	$(MAKE) --directory=poc clean
+	$(MAKE) --directory=$(EXPLOIT_DIR) clean
 
-$(POC_PATH):
-	$(MAKE) --directory=poc
+$(EXPLOIT_PATH):
+	$(MAKE) --directory=$(EXPLOIT_DIR)
